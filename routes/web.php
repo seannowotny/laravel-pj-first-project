@@ -11,9 +11,9 @@
 |
 */
 
-Route::view('/', 'home');
+Route::view('/', 'home')->name('home');
 
-Route::view('/contact', 'contact');
+Route::view('/contact', 'contact')->name('contact');
 
 Route::get('/blog-post/{id}/{welcome?}', function($id, $welcome_i = 1){
     $pages = [
@@ -30,4 +30,4 @@ Route::get('/blog-post/{id}/{welcome?}', function($id, $welcome_i = 1){
         'data' => $pages[$id], 
         'welcome' => $welcomes[$welcome_i]
         ]);
-});
+})->name('blog-post');
