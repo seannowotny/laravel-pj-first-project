@@ -42,4 +42,23 @@ class PostController extends Controller
 
         return redirect()->route('posts.show', ['post' => $blogPost->id]);
     }
+
+    public function edit(int $id)
+    {
+        $post = BlogPost::findOrFail($id);
+        return view('posts.edit', ['post' => $post]);
+    }
+
+    public function update(StorePost $request, int $id)
+    {
+        $post = BlogPost::findOrFail($id);
+        $validatedData = $request->validated();
+
+        $post->fill($validatedData);
+        $post->save();
+
+        $request->session()->flash('status', 'Blog post was updated!');
+
+        return redirect()->route('posts.show', ['post' => $post->id]);
+    }
 }
