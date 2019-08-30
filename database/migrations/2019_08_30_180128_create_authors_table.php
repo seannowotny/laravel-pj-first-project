@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddTitleContentToBlogpostsTable extends Migration
+class CreateAuthorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddTitleContentToBlogpostsTable extends Migration
      */
     public function up()
     {
-        Schema::table('blogposts', function (Blueprint $table) {
-            $table->string('title')->nullable();
-            $table->text('content')->nullable();
+        Schema::create('authors', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->timestamps();
         });
     }
 
@@ -26,8 +26,6 @@ class AddTitleContentToBlogpostsTable extends Migration
      */
     public function down()
     {
-        Schema::table('blogposts', function (Blueprint $table) {
-            $table->dropColumn(['title', 'content']);
-        });
+        Schema::dropIfExists('authors');
     }
 }
