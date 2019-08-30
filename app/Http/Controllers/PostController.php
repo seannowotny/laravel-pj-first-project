@@ -8,22 +8,11 @@ use App\Http\Requests\StorePost;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return view('posts.index', ['posts' => BlogPost::all()]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(int $id)
     {
         return view('posts.show', ['post' => BlogPost::findOrFail($id)]);
@@ -60,5 +49,14 @@ class PostController extends Controller
         $request->session()->flash('status', 'Blog post was updated!');
 
         return redirect()->route('posts.show', ['post' => $post->id]);
+    }
+
+    public function destroy(Request $request, int $id)
+    {
+        BlogPost::destroy($id);
+
+        $request->session()->flash('status', 'Blog post was deleted!');
+
+        return redirect()->route('posts.index');
     }
 }
