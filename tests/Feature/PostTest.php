@@ -13,12 +13,7 @@ class PostTest extends TestCase
 
     private function createDummyBlogPost(): BlogPost
     {
-        $post = new BlogPost();
-        $post->title = 'New title';
-        $post->content = 'Content of the blog post';
-        $post->save();
-
-        return $post;
+        return factory(BlogPost::class)->states('new-title')->create();
     }
 
     public function test_No_BlogPosts_When_Nothing_In_DB()
