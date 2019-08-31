@@ -2,12 +2,20 @@
 
 @section('content')
     <h1>{{ $post->title }}</h1>
-    <p>{{ $post->content }}</p>
+    <h5>{{ $post->content }}</h5>
 
-    <p>Added {{ $post->created_at->diffForHumans() }}</p>
+    <h3>Comments</h3>
+    @forelse ($post->comments as $comment)
+        <p>{{ $comment->content }}</p>
+        <p class="text-muted">Added {{ $comment->created_at->diffForHumans() }}</p>
+    @empty
+        <p>No Comments yet!</p>
+    @endforelse
+
+    <h5>Added {{ $post->created_at->diffForHumans() }}</h5>
 
     @if(($diff = (new Carbon\Carbon())->diffInMinutes($post->created_at)) < 5)
-        <h2>New!</h2>
-        <h3>Created {{ $diff }} minutes ago</h3>
+        <h4>New!</h4>
+        <h5>Created {{ $diff }} minutes ago</h5>
     @endif
 @endsection
