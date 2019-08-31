@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\BlogPost;
+use App\Comment;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -27,19 +28,32 @@ class PostTest extends TestCase
         $response->assertSeeText('No blog posts yet!');
     }
 
-    public function test_See_One_Blog_Post_When_There_Is_One()
+    public function test_See_One_Blog_Post_When_There_Is_One_Without_Comments()
     {
         $this->createDummyBlogPost();
         
         $response = $this->get('/posts');
 
         $response->assertSeeText('New title');
+        $response->assertSeeText('No comments yet!');
         $response->assertDontSee('Content of the blog post');
 
         $this->assertDatabaseHas('blog_posts', [
             'title' => 'New title',
             'content' => 'Content of the blog post'
         ]);
+    }
+
+    public function test_See_One_Post_With_Comments()
+    {
+        $post = $this->createDummyBlogPost();
+        factory(Comment::class, 4)->create([
+            'blog_post_id' => $post->id
+        ]);
+        
+        $response = $this->get('/posts');
+
+        $response->assertSeeText('4 comments');
     }
 
     public function test_Store_Valid()

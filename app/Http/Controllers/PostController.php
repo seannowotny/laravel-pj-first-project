@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\BlogPost;
 use App\Http\Requests\StorePost;
 
@@ -10,7 +11,19 @@ class PostController extends Controller
 {
     public function index()
     {
-        return view('posts.index', ['posts' => BlogPost::all()]);
+        // DB::connection()->enableQueryLog();
+
+        // dd(BlogPost::withCount(['comments', 'comments as new_comments' => function($query){
+        //     $query->where('created_at', '>=', '2019-08-31 09:30:56');
+        // }])->get());
+
+        // dd(DB::getQueryLog());
+
+        //comments_count
+        return view(
+            'posts.index',
+            ['posts' => BlogPost::withCount('comments')->get()]
+        );
     }
 
     public function show(int $id)
