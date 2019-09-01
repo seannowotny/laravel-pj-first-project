@@ -42,7 +42,7 @@
                         document.getElementById('logout-form').submit();
                     "
                 >
-                    Logout
+                    Logout ({{ Auth::user()->name }})
                 </a>
 
                 <form 

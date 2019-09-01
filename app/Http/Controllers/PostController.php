@@ -9,6 +9,12 @@ use App\Http\Requests\StorePost;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')
+        ->only(['create', 'edit', 'update', 'destroy']);
+    }
+
     public function index()
     {
         // DB::connection()->enableQueryLog();
