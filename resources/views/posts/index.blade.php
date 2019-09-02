@@ -17,16 +17,24 @@
             <p>No comments yet!</p>
         @endif
             
-        <a href="{{ route('posts.edit', ['post' => $post->id]) }}" 
-           class="btn btn-primary">Edit</a>
+        @can('update', $post)
+            <a href="{{ route('posts.edit', ['post' => $post->id]) }}" 
+                class="btn btn-primary">Edit</a>
+        @endcan
 
-        <form method="POST" class="fm-inline"
-              action="{{ route('posts.destroy', ['post' => $post->id]) }}">
-            @csrf
-            @method("DELETE")
+        {{-- @cannot('delete', $post)
+            <p>You cannot delete this post</p>
+        @endcannot --}}
 
-            <input type="submit" class="btn btn-primary" value="Delete!"/>
-        </form>
+        @can('delete', $post)
+            <form method="POST" class="fm-inline"
+                action="{{ route('posts.destroy', ['post' => $post->id]) }}">
+                @csrf
+                @method("DELETE")
+
+                <input type="submit" class="btn btn-primary" value="Delete!"/>
+            </form>
+        @endcan
     @empty
         <p>No blog posts yet!</p>
     @endforelse
