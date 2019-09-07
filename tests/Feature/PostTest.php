@@ -11,9 +11,13 @@ class PostTest extends TestCase
 {
     use RefreshDatabase;
 
-    private function createDummyBlogPost(): BlogPost
+    private function createDummyBlogPost($user_id = null): BlogPost
     {
-        return factory(BlogPost::class)->states('new-title')->create();
+        return factory(BlogPost::class)->states('new-title')->create(
+            [
+                'user_id' => $user_id ?? $this->user()->id,
+            ]
+        );
     }
 
     public function test_No_BlogPosts_When_Nothing_In_DB()
@@ -85,7 +89,8 @@ class PostTest extends TestCase
 
     public function test_Update_Valid()
     {
-        $post = $this->createDummyBlogPost();
+        $user = $this->user();
+        $post = $this->createDummyBlogPost($user->id);
 
         $this->assertDatabaseHas('blog_posts', $post->toArray());
 
@@ -94,7 +99,7 @@ class PostTest extends TestCase
             'content' => 'Content was changed'
         ];
 
-        $this->actingAs($this->user())
+        $this->actingAs($user)
             ->put("/posts/{$post->id}", $params)
             ->assertStatus(302)
             ->assertSessionHas('status');
@@ -109,10 +114,11 @@ class PostTest extends TestCase
 
     public function test_Delete()
     {
-        $post = $this->createDummyBlogPost();
+        $user = $this->user();
+        $post = $this->createDummyBlogPost($user->id);
         $this->assertDatabaseHas('blog_posts', $post->toArray());
 
-        $this->actingAs($this->user())
+        $this->actingAs($user)
             ->delete("/posts/{$post->id}")
             ->assertStatus(302)
             ->assertSessionHas('status');
