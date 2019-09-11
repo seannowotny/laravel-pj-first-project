@@ -19,13 +19,10 @@ class AddCascadeDeleteToCommentsTable extends Migration
             {
                 $table->dropForeign(['blog_post_id']);
             }
-            else
-            {
-                $table->foreign('blog_post_id')
-                    ->references('id')
-                    ->on('blog_posts')
-                    ->onDelete('cascade');
-            }
+            $table->foreign('blog_post_id')
+                ->references('id')
+                ->on('blog_posts')
+                ->onDelete('cascade');
         });
     }
 
