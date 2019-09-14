@@ -1,18 +1,17 @@
 @extends('layout')
 
 @section('content')
-  <h1>{{ $post->title }}</h1>
-  <h5>{{ $post->content }}</h5>
-
-  <h5>Added {{ $post->created_at->diffForHumans() }}</h5>
-
-  @if(($diff = (new Carbon\Carbon())->diffInMinutes($post->created_at)) < 520)
-    @badge
-        New!
+  <h1>
+    {{ $post->title }}
+    @badge(['show' => now()->diffInMinutes($post->created_at) < 520])
+      New!
     @endbadge
-  @endif
+  </h1>
 
-  <h3>Comments</h3>
+  <p>{{ $post->content }}</p>
+  <p>Added {{ $post->created_at->diffForHumans() }}</p>
+
+  <h4>Comments</h4>
   @forelse ($post->comments as $comment)
     <p>{{ $comment->content }}</p>
     <p class="text-muted">Added {{ $comment->created_at->diffForHumans() }}</p>
