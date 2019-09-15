@@ -90,6 +90,7 @@ class PostTest extends TestCase
     public function test_Update_Valid()
     {
         $user = $this->user();
+        // $user->is_admin = true;
         $post = $this->createDummyBlogPost($user->id);
 
         $this->assertDatabaseHas('blog_posts', $post->toArray());
@@ -115,7 +116,11 @@ class PostTest extends TestCase
     public function test_Delete()
     {
         $user = $this->user();
+        // $user->is_admin = true;
         $post = $this->createDummyBlogPost($user->id);
+
+        // dd($user->toArray(), $post->toArray());
+
         $this->assertDatabaseHas('blog_posts', $post->toArray());
 
         $this->actingAs($user)
