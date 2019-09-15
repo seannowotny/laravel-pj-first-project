@@ -22,7 +22,7 @@ class PostTest extends TestCase
 
     public function test_No_BlogPosts_When_Nothing_In_DB()
     {
-        $response = $this->get('/posts');
+        dd($response = $this->get('/posts'));
 
         $response->assertSeeText('No blog posts yet!');
     }
