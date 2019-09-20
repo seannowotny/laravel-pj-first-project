@@ -41,19 +41,42 @@ class PostController extends Controller
 
     public function show(int $id)
     {
-        // return view('posts.show', [
-        //     'post' => BlogPost::with(['comments' => function($query){
-        //         return $query->latest();
-        //     }])->findOrFail($id)
-        // ]);
-
         $blogPost = Cache::remember("blog-post-{$id}", 60, function() use($id) {
             return BlogPost::with('comments')->findOrFail($id);
         });
 
+        $counter = $this->GetUsersOnPageAmount("blog-post-{$id}-users");
+
         return view('posts.show', [
             'post' => $blogPost,
+            'counter' => $counter,
         ]);
+    }
+
+    private function GetUsersOnPageAmount($sessionsName)
+    {
+        $sessions = Cache::get($sessionsName);
+        $visitorSession = session()->getId();
+        $sessions[$visitorSession] = now();
+
+        $sessions = $this->RemoveOutdatedSessions($sessions, 60);
+
+        Cache::forever($sessionsName, $sessions);
+        
+        return count($sessions);
+    }
+
+    private function RemoveOutdatedSessions($sessions, $maxTimeInSeconds)
+    {
+        foreach($sessions as $session => $lastVisit)
+        {
+            if(now()->diffInSeconds($lastVisit) > $maxTimeInSeconds)
+            {
+                unset($session);
+            }
+        }
+
+        return $sessions;
     }
 
     public function create()
