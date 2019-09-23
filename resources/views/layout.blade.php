@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+  {{--<link rel="stylesheet" href="{{ mix('css/app.css') }}">--}}
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" >
   <title>Document</title>
 </head>
 <body>
@@ -20,23 +21,23 @@
 
       @guest
         @if(Route::has('register'))
-          <a 
-            class="p-2 text-dark" 
+          <a
+            class="p-2 text-dark"
             href="{{ route('register') }}"
           >
             Register
           </a>
         @endif
-        
-        <a 
-          class="p-2 text-dark" 
+
+        <a
+          class="p-2 text-dark"
           href="{{ route('login') }}"
         >
           Login
         </a>
       @else
-        <a 
-          class="p-2 text-dark" 
+        <a
+          class="p-2 text-dark"
           href="#"
           onclick=
           "
@@ -47,9 +48,9 @@
           Logout ({{ Auth::user()->name }})
         </a>
 
-        <form 
-          id="logout-form" 
-          action="{{ route('logout') }}" 
+        <form
+          id="logout-form"
+          action="{{ route('logout') }}"
           method="POST"
           style="display: none"
         >
@@ -69,6 +70,7 @@
     @yield('content')
   </div>
 
-  <script src="{{ mix('js/app.js') }}"></script>
+  {{--<script src="{{ mix('js/app.js') }}"></script>--}}
+  <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>
