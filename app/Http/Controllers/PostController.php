@@ -62,7 +62,7 @@ class PostController extends Controller
         $sessions = $this->RemoveOutdatedSessions($sessions, 60);
 
         Cache::forever($sessionsName, $sessions);
-        
+
         return count($sessions);
     }
 
@@ -72,7 +72,7 @@ class PostController extends Controller
         {
             if(now()->diffInSeconds($lastVisit) > $maxTimeInSeconds)
             {
-                unset($session);
+                unset($sessions[$session]);
             }
         }
 
@@ -124,7 +124,7 @@ class PostController extends Controller
         $this->authorize($post);
 
         BlogPost::destroy($id);
- 
+
         $request->session()->flash('status', 'Blog post was deleted!');
 
         return redirect()->route('posts.index');
