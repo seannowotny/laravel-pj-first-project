@@ -31,7 +31,10 @@ class PostController extends Controller
         return view(
             'posts.index',
             [
-                'posts' => BlogPost::latest()->withCount('comments')->with('user')->get(),
+                'posts' => BlogPost::latest()->withCount('comments')
+                    ->with('user')
+                    ->with('tags')
+                    ->get(),
                 'mostCommented' => $mostCommented,
                 'mostActive' => $mostActive,
                 'mostActiveLastMonth' => $mostActiveLastMonth,
@@ -42,7 +45,7 @@ class PostController extends Controller
     public function show(int $id)
     {
         $blogPost = Cache::tags(['blog-post'])->remember("blog-post-{$id}", 60*60, function() use($id) {
-            return BlogPost::with('comments')->findOrFail($id);
+            return BlogPost::with('comments')->with('tags')->with('user')->findOrFail($id);
         });
 
         $counter = $this->GetUsersOnPageAmount("blog-post-{$id}-users");
