@@ -21,15 +21,17 @@
       @updated(['date' => $post->created_at, 'name' => $post->user->name ])
       @endupdated
 
+        @tags(['tags' => $post->tags])@endtags
+
       @if ($post->comments_count)
         <p>{{ $post->comments_count }} comments</p>
       @else
         <p>No comments yet!</p>
       @endif
-      
+
       @auth
         @can('update', $post)
-          <a href="{{ route('posts.edit', ['post' => $post->id]) }}" 
+          <a href="{{ route('posts.edit', ['post' => $post->id]) }}"
           class="btn btn-primary">Edit</a>
         @endcan
 
@@ -37,7 +39,7 @@
           <p>You cannot delete this post</p>
         @endcannot --}}
 
-      
+
         @if(! $post->trashed())
           @can('delete', $post)
           <form method="POST" class="fm-inline"
@@ -50,7 +52,7 @@
           @endcan
         @endif
       @endauth
-      
+
       @empty
       <p>No blog posts yet!</p>
       @endforelse
@@ -83,7 +85,7 @@
             @slot('items', collect($mostActive)->pluck('name'))
           @endcard
         </div>
-      
+
         <div class="row mt-4">
           @card(['title' => 'Most Active Last Month'])
             @slot('subtitle')
