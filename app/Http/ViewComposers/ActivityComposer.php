@@ -13,13 +13,13 @@ class ActivityComposer
     {
         $timeInSeconds = 60 * 10;
 
-        $mostCommented = Cache::tags(['blog-post'])->remember('blog-post-most-commented', $timeInSeconds, function(){
+        $mostCommented = Cache::tags(['blog-post'])->remember('mostCommented', $timeInSeconds, function(){
             return BlogPost::mostCommented()->take(5)->get();
         });
         $mostActive = Cache::remember('users-most-active', $timeInSeconds, function(){
             return User::withMostBlogPosts()->take(5)->get();
         });
-        $mostActiveLastMonth = Cache::remember('users-most-active-last-month', $timeInSeconds, function(){
+        $mostActiveLastMonth = Cache::remember('mostActiveLastMonth', $timeInSeconds, function(){
             return User::withMostBlogPostsLastMonth()->take(5)->get();
         });
 
