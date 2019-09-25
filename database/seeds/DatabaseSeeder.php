@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        if($this->command->confirm('So you want to refresh the database?'))
+        if($this->command->confirm('Do you want to refresh the database?'))
         {
             $this->command->call('migrate:refresh');
             $this->command->info('Database was refreshed');
@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             BlogPostsTableSeeder::class,
             CommentsTableSeeder::class,
+            TagsTableSeeder::class,
+            BlogPostTagTableSeeder::class,
         ]);
     }
 }
