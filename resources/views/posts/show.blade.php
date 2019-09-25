@@ -24,8 +24,10 @@
 
           <h4>Comments</h4>
           @forelse ($post->comments as $comment)
-            <p>{{ $comment->content }}</p>
-            @updated(['date' => $comment->created_at])
+            <p>
+                {{ $comment->content }}
+            </p>
+            @updated(['date' => $comment->created_at, 'name' => $comment->user->name ])
             @endupdated
           @empty
             <p>No Comments yet!</p>
