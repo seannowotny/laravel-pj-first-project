@@ -3,16 +3,22 @@
 @section('content')
     <div class="row">
         <div class="col-8">
-          <h1>
+            @if($post->image)
+                <div style="background-image: url('{{ $post->image->url() }}'); min-height: 500px; color: white; text-align: center; background-size: cover; background-position: center; background-attachment: fixed; background-repeat: no-repeat";>
+                    <h1 style="padding-top: 100px; text-shadow: 1px 2px #000">
+            @else
+            </h1>
+            @endif
             {{ $post->title }}
             @badge(['show' => now()->diffInMinutes($post->created_at) < 520])
               New!
             @endbadge
           </h1>
+          @if($post->image)
+            </div>
+            @endif
 
           <p>{{ $post->content }}</p>
-
-            <img src="{{ $post->image->url() }}" />
 
           @updated(['date' => $post->created_at, 'name' => $post->user->name ])
           @endupdated
