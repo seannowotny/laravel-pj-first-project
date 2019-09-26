@@ -4,14 +4,9 @@ namespace App\Http\Controllers;
 
 use App\BlogPost;
 use App\Http\Requests\StoreComment;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class PostCommentController extends Controller
 {
-    use SoftDeletes;
-
     public function __construct()
     {
         $this->middleware('auth')->only(['store']);
@@ -25,8 +20,7 @@ class PostCommentController extends Controller
             'user_id' => $request->user()->id,
         ]);
 
-        $request->session()->flash('status', 'Comment was created!');
-
-        return redirect()->back();
+        return redirect()->back()
+            ->withStatus('Comment was created!');
     }
 }
