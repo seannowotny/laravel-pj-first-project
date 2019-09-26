@@ -32,6 +32,7 @@ return array(
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Http\\Requests\\StoreComment' => $baseDir . '/app/Http/Requests/StoreComment.php',
     'App\\Http\\Requests\\StorePost' => $baseDir . '/app/Http/Requests/StorePost.php',
+    'App\\Http\\Requests\\UpdateUser' => $baseDir . '/app/Http/Requests/UpdateUser.php',
     'App\\Http\\ViewComposers\\ActivityComposer' => $baseDir . '/app/Http/ViewComposers/ActivityComposer.php',
     'App\\Image' => $baseDir . '/app/Image.php',
     'App\\Policies\\BlogPostPolicy' => $baseDir . '/app/Policies/BlogPostPolicy.php',
