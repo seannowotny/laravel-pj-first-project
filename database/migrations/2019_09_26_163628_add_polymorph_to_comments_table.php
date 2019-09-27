@@ -31,8 +31,8 @@ class AddPolymorphToCommentsTable extends Migration
         Schema::table('comments', function (Blueprint $table) {
             $table->dropMorphs('commentable');
 
-            $table->unsignedBigInteger('blog_post_id')->index();
-            $table->foreign('blog_post_id')->references('id')->on('blog_post');
+            $table->unsignedBigInteger('blog_post_id')->index()->nullable();
+            $table->foreign('blog_post_id')->references('id')->on('blog_posts');
         });
     }
 }
