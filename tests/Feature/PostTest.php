@@ -30,7 +30,7 @@ class PostTest extends TestCase
     public function test_See_One_Blog_Post_When_There_Is_One_Without_Comments()
     {
         $this->createDummyBlogPost();
-        
+
         $response = $this->get('/posts');
 
         $response->assertSeeText('New title');
@@ -46,9 +46,10 @@ class PostTest extends TestCase
     {
         $post = $this->createDummyBlogPost();
         factory(Comment::class, 4)->create([
-            'blog_post_id' => $post->id
+            'commentable_id' => $post->id,
+            'commentable_type' => 'App\BlogPost',
         ]);
-        
+
         $response = $this->get('/posts');
 
         $response->assertSeeText('4 comments');
