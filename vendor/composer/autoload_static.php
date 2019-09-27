@@ -426,6 +426,7 @@ class ComposerStaticInit1948f0118e9cc2f92a7d70e73b9b37e1
         'App\\Http\\Controllers\\PostCommentController' => __DIR__ . '/../..' . '/app/Http/Controllers/PostCommentController.php',
         'App\\Http\\Controllers\\PostController' => __DIR__ . '/../..' . '/app/Http/Controllers/PostController.php',
         'App\\Http\\Controllers\\PostTagController' => __DIR__ . '/../..' . '/app/Http/Controllers/PostTagController.php',
+        'App\\Http\\Controllers\\UserCommentController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserCommentController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',

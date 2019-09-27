@@ -21,6 +21,7 @@ return array(
     'App\\Http\\Controllers\\PostCommentController' => $baseDir . '/app/Http/Controllers/PostCommentController.php',
     'App\\Http\\Controllers\\PostController' => $baseDir . '/app/Http/Controllers/PostController.php',
     'App\\Http\\Controllers\\PostTagController' => $baseDir . '/app/Http/Controllers/PostTagController.php',
+    'App\\Http\\Controllers\\UserCommentController' => $baseDir . '/app/Http/Controllers/UserCommentController.php',
     'App\\Http\\Controllers\\UserController' => $baseDir . '/app/Http/Controllers/UserController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
