@@ -14,7 +14,7 @@
 </p>
 
 <hr/>
-
+<img src="{{ $message->embed($comment->user->image->url()) }}"/>
 <p>
     <a href="{{ route('users.show', ['user' => $comment->user->id]) }}">
         {{ $comment->user->name }}
