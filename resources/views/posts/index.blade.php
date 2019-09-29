@@ -23,16 +23,12 @@
 
                 @tags(['tags' => $post->tags])@endtags
 
-                @if ($post->comments_count)
-                    <p>{{ $post->comments_count }} comments</p>
-                @else
-                    <p>No comments yet!</p>
-                @endif
+                {{ trans_choice('messages.comments', $post->comments_count) }}
 
                 @auth
                     @can('update', $post)
                         <a href="{{ route('posts.edit', ['post' => $post->id]) }}"
-                           class="btn btn-primary">Edit</a>
+                           class="btn btn-primary">{{ __('Edit') }}</a>
                     @endcan
 
                     {{-- @cannot('delete', $post)
@@ -47,14 +43,14 @@
                                 @csrf
                                 @method("DELETE")
 
-                                <input type="submit" class="btn btn-primary" value="Delete!"/>
+                                <input type="submit" class="btn btn-primary" value="{{ __('Delete!') }}"/>
                             </form>
                         @endcan
                     @endif
                 @endauth
 
             @empty
-                <p>No blog posts yet!</p>
+                <p>{{ __('No blog posts yet!') }}</p>
             @endforelse
         </div>
 
