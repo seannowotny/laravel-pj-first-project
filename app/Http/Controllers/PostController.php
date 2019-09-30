@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\BlogPostPosted;
 use App\Image;
+use App\Services\Counter;
 use Illuminate\Http\Request;
 use App\BlogPost;
 use App\Http\Requests\StorePost;
@@ -37,38 +38,12 @@ class PostController extends Controller
             return BlogPost::with('comments', 'tags', 'user', 'comments.user')->findOrFail($id);
         });
 
-        $counter = $this->GetUsersOnPageAmount("blog-post-{$id}-users");
+        $counter = new Counter();
 
         return view('posts.show', [
             'post' => $blogPost,
-            'counter' => $counter,
+            'counter' => $counter->GetUsersOnPageAmount("blog-post-{$id}-users", ['blog-post']),
         ]);
-    }
-
-    private function GetUsersOnPageAmount($sessionsName)
-    {
-        $sessions = Cache::tags(['blog-post'])->get($sessionsName);
-        $visitorSession = session()->getId();
-        $sessions[$visitorSession] = now();
-
-        $sessions = $this->RemoveOutdatedSessions($sessions, 60);
-
-        Cache::tags(['blog-post'])->forever($sessionsName, $sessions);
-
-        return count($sessions);
-    }
-
-    private function RemoveOutdatedSessions($sessions, $maxTimeInSeconds)
-    {
-        foreach($sessions as $session => $lastVisit)
-        {
-            if(now()->diffInSeconds($lastVisit) > $maxTimeInSeconds)
-            {
-                unset($sessions[$session]);
-            }
-        }
-
-        return $sessions;
     }
 
     public function create()
