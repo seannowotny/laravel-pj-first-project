@@ -37,6 +37,18 @@
         </a>
       @else
         <a
+        class="p-2 text-dark"
+        href="{{ route('users.show', ['user' => Auth::user()->id]) }}"
+        >
+            {{ __('Profile') }}
+        </a>
+            <a
+                class="p-2 text-dark"
+                href="{{ route('users.edit', ['user' => Auth::user()->id]) }}"
+            >
+                {{ __('Edit Profile') }}
+            </a>
+        <a
           class="p-2 text-dark"
           href="#"
           onclick=
