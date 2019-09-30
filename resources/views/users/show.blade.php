@@ -12,6 +12,8 @@
         <div class="col-8">
             <h3>{{ $user->name }}</h3>
 
+            <p>Currently viewed by {{ $counter }} users</p>
+
             @commentForm(['route' => route('users.comments.store', ['user' => $user->id])])
             @endcommentForm
 
