@@ -16,6 +16,7 @@ class PostController extends Controller
     {
         $this->middleware('auth')
         ->only(['create', 'edit', 'update', 'destroy']);
+        /*$this->middleware('locale');*/
     }
 
     public function index()
