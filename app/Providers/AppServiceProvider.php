@@ -7,6 +7,7 @@ use App\Comment;
 use App\Http\ViewComposers\ActivityComposer;
 use App\Observers\BlogPostObserver;
 use App\Observers\CommentObserver;
+use App\Services\Counter;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -44,5 +45,9 @@ class AppServiceProvider extends ServiceProvider
 
         BlogPost::observe(BlogPostObserver::class);
         Comment::observe(CommentObserver::class);
+
+        $this->app->singleton(Counter::class, function($app){
+           return new Counter(env('COUNTER_TIMEOUT'));
+        });
     }
 }

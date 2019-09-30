@@ -6,20 +6,27 @@ use Illuminate\Support\Facades\Cache;
 
 class Counter
 {
-    public function GetUsersOnPageAmount(string $sessionsName, $tags = null): int
+    private $timeout;
+
+    public function __construct(int $timeout)
+    {
+        $this->timeout = $timeout;
+    }
+
+    public function GetUsersOnPageAmount(string $sessionsName, array $tags = null): int
     {
         $sessions = Cache::tags($tags)->get($sessionsName);
         $visitorSession = session()->getId();
         $sessions[$visitorSession] = now();
 
-        $sessions = $this->RemoveOutdatedSessions($sessions, 60);
+        $sessions = $this->RemoveOutdatedSessions($sessions, $this->timeout);
 
         Cache::tags($tags)->forever($sessionsName, $sessions);
 
         return count($sessions);
     }
 
-    private function RemoveOutdatedSessions($sessions, $maxTimeInSeconds)
+    private function RemoveOutdatedSessions(array $sessions, int $maxTimeInSeconds): array
     {
         foreach($sessions as $session => $lastVisit)
         {
