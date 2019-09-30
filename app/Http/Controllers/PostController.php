@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\CounterContract;
 use App\Events\BlogPostPosted;
+use App\Facades\CounterFacade;
 use App\Image;
 use Illuminate\Http\Request;
 use App\BlogPost;
@@ -13,12 +13,8 @@ use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
-    private $counter;
-
-    public function __construct(CounterContract $counter)
+    public function __construct()
     {
-        $this->counter = $counter;
-
         $this->middleware('auth')
         ->only(['create', 'edit', 'update', 'destroy']);
         /*$this->middleware('locale');*/
@@ -42,7 +38,7 @@ class PostController extends Controller
 
         return view('posts.show', [
             'post' => $blogPost,
-            'counter' => $this->counter->GetUsersOnPageAmount("blog-post-{$id}-users", ['blog-post']),
+            'counter' => CounterFacade::GetUsersOnPageAmount("blog-post-{$id}-users", ['blog-post']),
         ]);
     }
 
