@@ -11,8 +11,12 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
-    public function __construct()
+    private $counter;
+
+    public function __construct(Counter $counter)
     {
+        $this->counter = $counter;
+
         $this->middleware('auth');
         $this->authorizeResource(User::class, 'user');
     }
@@ -56,11 +60,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $counter = resolve(Counter::class);
-
         return view('users.show', [
             'user' => $user,
-            'counter' => $counter->GetUsersOnPageAmount("user-{$user->id}-users", ['user'])
+            'counter' => $this->counter->GetUsersOnPageAmount("user-{$user->id}-users", ['user'])
         ]);
     }
 

@@ -13,8 +13,12 @@ use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
-    public function __construct()
+    private $counter;
+
+    public function __construct(Counter $counter)
     {
+        $this->counter = $counter;
+
         $this->middleware('auth')
         ->only(['create', 'edit', 'update', 'destroy']);
         /*$this->middleware('locale');*/
@@ -22,8 +26,6 @@ class PostController extends Controller
 
     public function index()
     {
-
-
         return view(
             'posts.index',
             [
@@ -38,11 +40,9 @@ class PostController extends Controller
             return BlogPost::with('comments', 'tags', 'user', 'comments.user')->findOrFail($id);
         });
 
-        $counter = resolve(Counter::class);
-
         return view('posts.show', [
             'post' => $blogPost,
-            'counter' => $counter->GetUsersOnPageAmount("blog-post-{$id}-users", ['blog-post']),
+            'counter' => $this->counter->GetUsersOnPageAmount("blog-post-{$id}-users", ['blog-post']),
         ]);
     }
 
