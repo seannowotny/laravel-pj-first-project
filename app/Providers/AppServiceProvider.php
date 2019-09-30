@@ -51,6 +51,8 @@ class AppServiceProvider extends ServiceProvider
            return new Counter($app->make('Illuminate\Contracts\Cache\Factory'), $app->make('Illuminate\Contracts\Session\Session'), env('COUNTER_TIMEOUT'));
         });
 
+        $this->app->bind('App\Contracts\CounterContract', Counter::class);
+
         //Dependency injection methodology for non-singleton classes only
         /*$this->app->when(Counter::class)
             ->needs('$timeout')
