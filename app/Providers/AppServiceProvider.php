@@ -8,9 +8,11 @@ use App\Http\ViewComposers\ActivityComposer;
 use App\Observers\BlogPostObserver;
 use App\Observers\CommentObserver;
 use App\Services\Counter;
+use Illuminate\Http\Resources\Json\Resource;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use App\Http\Resources\Comment as CommentResource;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -52,6 +54,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->bind('App\Contracts\CounterContract', Counter::class);
+
+        /*CommentResource::withoutWrapping();*/
+        Resource::withoutWrapping();
 
         //Dependency injection methodology for non-singleton classes only
         /*$this->app->when(Counter::class)
