@@ -56,6 +56,7 @@ return array(
     'App\\Observers\\BlogPostObserver' => $baseDir . '/app/Observers/BlogPostObserver.php',
     'App\\Observers\\CommentObserver' => $baseDir . '/app/Observers/CommentObserver.php',
     'App\\Policies\\BlogPostPolicy' => $baseDir . '/app/Policies/BlogPostPolicy.php',
+    'App\\Policies\\CommentPolicy' => $baseDir . '/app/Policies/CommentPolicy.php',
     'App\\Policies\\UserPolicy' => $baseDir . '/app/Policies/UserPolicy.php',
     'App\\Profile' => $baseDir . '/app/Profile.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
