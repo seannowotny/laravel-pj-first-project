@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\BlogPost;
-use App\Comment;
-use App\Events\CommentPosted;
-use App\Http\Requests\StoreComment;
-use App\Http\Resources\Comment as CommentResource;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Session\Store;
+use App\BlogPost;
+use App\Http\Resources\Comment as CommentResource;
+use App\Http\Requests\StoreComment;
+use App\Events\CommentPosted;
+use App\Comment;
 
 class PostCommentController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api')->only(['store']);
+        $this->middleware('auth:api')->only(['store', 'update', 'destroy']);
     }
 
     /**
@@ -28,9 +27,10 @@ class PostCommentController extends Controller
         $perPage = $request->input('per_page') ?? 15;
         return CommentResource::collection(
             $post->comments()->with('user')->paginate($perPage)->appends(
-            [
-                'per_page' => $perPage,
-            ])
+                [
+                    'per_page' => $perPage
+                ]
+            )
         );
     }
 
@@ -42,12 +42,11 @@ class PostCommentController extends Controller
      */
     public function store(BlogPost $post, StoreComment $request)
     {
-        $comment = $post->comments()->create(
-        [
+        $comment = $post->comments()->create([
             'content' => $request->input('content'),
-            'user_id' => $request->user()->id,
+            'user_id' => $request->user()->id
         ]);
-
+        $this->authorize($comment);
         event(new CommentPosted($comment));
 
         return new CommentResource($comment);
@@ -61,6 +60,7 @@ class PostCommentController extends Controller
      */
     public function show(BlogPost $post, Comment $comment)
     {
+        $this->authorize($comment);
         return new CommentResource($comment);
     }
 

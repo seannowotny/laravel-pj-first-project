@@ -11,17 +11,6 @@ class CommentPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view any comments.
-     *
-     * @param  \App\User  $user
-     * @return mixed
-     */
-    public function viewAny(User $user)
-    {
-        return true;
-    }
-
-    /**
      * Determine whether the user can view the comment.
      *
      * @param  \App\User  $user
@@ -53,7 +42,7 @@ class CommentPolicy
      */
     public function update(User $user, Comment $comment)
     {
-        return $user->id === $comment->user_id;
+        return $comment->user_id === $user->id;
     }
 
     /**
@@ -65,17 +54,7 @@ class CommentPolicy
      */
     public function delete(User $user, Comment $comment)
     {
-        return true;
-        return $user->id === $comment->user_id;
-//        $result = false;
-//        if ($user->is_admin) {
-//            $result = true;
-//        } elseif ($user->id === $comment->blog_post->user_id) {
-//            $result = true;
-//        } elseif ($user->id === $comment->user_id) {
-//            $result = true;
-//        }
-//        return $result;
+        return $comment->user_id === $user->id;
     }
 
     /**
@@ -99,6 +78,6 @@ class CommentPolicy
      */
     public function forceDelete(User $user, Comment $comment)
     {
-        return true;
+        return false;
     }
 }
